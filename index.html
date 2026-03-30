@@ -444,11 +444,28 @@
 
 <script>
 (function(){
-  if(!window.IntersectionObserver) return;
   var els = document.querySelectorAll('.fade-up');
+
+  // Hard fallback — make everything visible after 900ms regardless
+  var fallback = setTimeout(function(){
+    els.forEach(function(el){ el.classList.add('visible'); });
+  }, 900);
+
+  if(!window.IntersectionObserver){
+    clearTimeout(fallback);
+    els.forEach(function(el){ el.classList.add('visible'); });
+    return;
+  }
+
   var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
-  },{threshold:0.1});
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.05, rootMargin:'0px 0px -20px 0px'});
+
   els.forEach(function(el){ io.observe(el); });
 })();
 </script>
