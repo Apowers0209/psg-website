@@ -232,7 +232,7 @@
         <div class="notify-form-wrap">
           <h3 class="notify-form-title">Join the Notification List</h3>
           <p class="notify-form-sub">We&rsquo;ll contact you when PSG Healthcare launches. No spam  -  one email when we open, one email when we have positions available.</p>
-          <form id="notify-form" novalidate>
+          <form id="notify-form" action="https://formspree.io/f/xnjodykb" method="POST" novalidate>
             <div class="form-group">
               <label for="notify-name">Full Name</label>
               <input type="text" id="notify-name" name="name" placeholder="Andrew Powers" autocomplete="name" required>
@@ -254,6 +254,7 @@
                 <option value="other">Other</option>
               </select>
             </div>
+            <input type="hidden" name="_subject" value="PSG Healthcare Launch Notification">
             <button type="submit" class="btn-gold" style="width:100%;justify-content:center">Notify Me at Launch</button>
             <p class="form-note">Your information is used only to notify you of PSG Healthcare&rsquo;s launch. We do not sell or share contact information.</p>
           </form>
@@ -349,20 +350,31 @@
 // Fade-in on scroll
 
 
-// Notification form  -  mailto fallback (replace with Netlify Forms or Formspree in production)
+// Healthcare Notification Form
 document.getElementById('notify-form').addEventListener('submit', function(e){
   e.preventDefault();
+  var form  = document.getElementById('notify-form');
   var name  = document.getElementById('notify-name').value.trim();
   var email = document.getElementById('notify-email').value.trim();
-  var org   = document.getElementById('notify-org').value.trim();
   var type  = document.getElementById('notify-type').value;
   if(!name || !email || !type){ alert('Please fill in all required fields.'); return; }
-  // Open mailto as fallback  -  swap for Netlify Forms or Formspree in production
-  var subject = encodeURIComponent('Healthcare Launch Notification  -  ' + name);
-  var body    = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nOrganization: ' + org + '\nType: ' + type);
-  window.location.href = 'mailto:andrew.powers@powersstaffinggroup.com?subject=' + subject + '&body=' + body;
-  document.getElementById('notify-form').style.display = 'none';
-  document.getElementById('success-msg').style.display = 'block';
+
+  var data = new FormData(form);
+
+  fetch(form.action, {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(function(res){
+    if(res.ok){
+      form.style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } else {
+      alert('Submission error. Please email andrew.powers@powersstaffinggroup.com directly.');
+    }
+  }).catch(function(){
+    alert('Network error. Please email andrew.powers@powersstaffinggroup.com directly.');
+  });
 });
 </script>
 
