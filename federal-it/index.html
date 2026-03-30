@@ -141,6 +141,23 @@
 @media (max-width: 480px) {
   .lc-detail-grid, .process-grid { grid-template-columns: 1fr; }
 }
+
+/* Talent Pool Form */
+.tp-field { margin-bottom: 1rem; }
+.tp-field label { display: block; font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+.tp-field input,
+.tp-field select { width: 100%; padding: 9px 12px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 2px; font-size: 13px; font-family: 'DM Sans', sans-serif; color: #fff; transition: border-color 0.2s; appearance: none; -webkit-appearance: none; }
+.tp-field input::placeholder { color: rgba(255,255,255,0.3); }
+.tp-field input:focus,
+.tp-field select:focus { outline: none; border-color: var(--gold); background: rgba(255,255,255,0.1); }
+.tp-field select option { background: var(--navy); color: #fff; }
+.tp-note { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 1rem; line-height: 1.5; text-align: center; }
+.tp-success { display: none; background: rgba(184,150,62,0.1); border: 1px solid rgba(184,150,62,0.3); border-radius: 2px; padding: 1.5rem; gap: 12px; align-items: flex-start; }
+.tp-success.show { display: flex; }
+.tp-success-title { font-size: 0.92rem; font-weight: 500; color: var(--gold-light); margin-bottom: 4px; }
+.tp-success-body { font-size: 0.83rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+.tp-success-body a { color: var(--gold-light); text-decoration: none; }
+.tp-success svg { flex-shrink: 0; margin-top: 2px; }
 </style>
 </head>
 
@@ -425,21 +442,74 @@
       </div>
       <div>
         <div class="apply-card">
-          <span class="apply-card-lbl">Currently Placing</span>
-          <h3>Open Labor Categories</h3>
-          <p>Positions are contingent on VA contract award. We work nationwide across all 18 VISNs  -  remote, hybrid, and on-site.</p>
-          <div class="lc-chips" aria-label="Open positions">
-            <div class="lc-chip">Help Desk Tier 1</div>
-            <div class="lc-chip">Help Desk Tier 2</div>
-            <div class="lc-chip">Desktop Support</div>
-            <div class="lc-chip">Systems Admin</div>
-            <div class="lc-chip">Network Admin</div>
-            <div class="lc-chip">Network Eng. I</div>
-            <div class="lc-chip">Network Eng. II</div>
-            <div class="lc-chip">+ More</div>
+          <span class="apply-card-lbl">Join the Talent Pool</span>
+          <h3>Get Matched to Your Next Federal IT Role</h3>
+          <p>No open position right now? Join our talent pool. When a VA contract position opens that matches your profile, you will be the first call we make.</p>
+          <form id="talent-form" novalidate>
+            <div class="tp-field">
+              <label for="tp-name">Full Name</label>
+              <input type="text" id="tp-name" name="name" placeholder="John Smith" autocomplete="name" required>
+            </div>
+            <div class="tp-field">
+              <label for="tp-email">Email Address</label>
+              <input type="email" id="tp-email" name="email" placeholder="you@email.com" autocomplete="email" required>
+            </div>
+            <div class="tp-field">
+              <label for="tp-phone">Phone Number</label>
+              <input type="tel" id="tp-phone" name="phone" placeholder="702-555-0100" autocomplete="tel">
+            </div>
+            <div class="tp-field">
+              <label for="tp-role">Primary Labor Category</label>
+              <select id="tp-role" name="role" required>
+                <option value="" disabled selected>Select your role</option>
+                <option value="HD1">Help Desk Tier 1</option>
+                <option value="HD2">Help Desk Tier 2</option>
+                <option value="DS">Desktop Support</option>
+                <option value="SA">Systems Administrator</option>
+                <option value="NA">Network Administrator</option>
+                <option value="NE1">Network Engineer I</option>
+                <option value="NE2">Network Engineer II</option>
+              </select>
+            </div>
+            <div class="tp-field">
+              <label for="tp-clearance">Clearance Status</label>
+              <select id="tp-clearance" name="clearance" required>
+                <option value="" disabled selected>Select clearance level</option>
+                <option value="none">No Clearance</option>
+                <option value="pt-pending">Public Trust Pending</option>
+                <option value="pt-active">Public Trust Active</option>
+                <option value="secret">Secret</option>
+                <option value="tssci">TS/SCI</option>
+              </select>
+            </div>
+            <div class="tp-field">
+              <label for="tp-location">Work Preference</label>
+              <select id="tp-location" name="location">
+                <option value="" disabled selected>Select preference</option>
+                <option value="remote">Remote Only</option>
+                <option value="hybrid">Hybrid</option>
+                <option value="onsite">On-Site</option>
+                <option value="any">Any / Flexible</option>
+              </select>
+            </div>
+            <div class="tp-field">
+              <label for="tp-veteran">Veteran Status</label>
+              <select id="tp-veteran" name="veteran">
+                <option value="" disabled selected>Select status</option>
+                <option value="yes">Veteran</option>
+                <option value="no">Non-Veteran</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-gold" style="width:100%;justify-content:center;margin-top:0.5rem">Join the Talent Pool</button>
+            <p class="tp-note">Your information is used only to match you to PSG positions. We do not sell or share candidate data.</p>
+          </form>
+          <div class="tp-success" id="tp-success" role="alert">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M3 9l4 4 8-8"/></svg>
+            <div>
+              <p class="tp-success-title">You are in the pool.</p>
+              <p class="tp-success-body">We will reach out directly when a position opens that matches your profile. Veterans and candidates with active clearances are prioritized. Questions? Call <a href="tel:+17026253433">702-625-3433</a>.</p>
+            </div>
           </div>
-          <p style="font-size:12px;color:rgba(255,255,255,0.38);margin-bottom:1.75rem;line-height:1.6">Send your résumé and we&rsquo;ll match you to an open or upcoming position. Veterans and candidates with existing Public Trust clearances are prioritized.</p>
-          <a href="mailto:andrew.powers@powersstaffinggroup.com?subject=IT%20Position%20Application" class="btn-gold">Apply Now</a>
         </div>
       </div>
     </div>
@@ -542,6 +612,61 @@
 </footer>
 
 <script>
+
+// Talent Pool Form
+(function(){
+  var form = document.getElementById('talent-form');
+  var success = document.getElementById('tp-success');
+  if(!form || !success) return;
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var name     = document.getElementById('tp-name').value.trim();
+    var email    = document.getElementById('tp-email').value.trim();
+    var phone    = document.getElementById('tp-phone').value.trim();
+    var role     = document.getElementById('tp-role').value;
+    var clearance= document.getElementById('tp-clearance').value;
+    var location = document.getElementById('tp-location').value;
+    var veteran  = document.getElementById('tp-veteran').value;
+
+    if(!name || !email || !role || !clearance){
+      var first = !name ? 'tp-name' : !email ? 'tp-email' : !role ? 'tp-role' : 'tp-clearance';
+      document.getElementById(first).focus();
+      document.getElementById(first).style.borderColor = 'rgba(232,100,100,0.8)';
+      setTimeout(function(){ document.getElementById(first).style.borderColor = ''; }, 2000);
+      return;
+    }
+
+    var subject = encodeURIComponent('Talent Pool Application: ' + role + ' | ' + name);
+    var body = encodeURIComponent(
+      'TALENT POOL APPLICATION
+' +
+      '========================
+' +
+      'Name:      ' + name + '
+' +
+      'Email:     ' + email + '
+' +
+      'Phone:     ' + (phone || 'Not provided') + '
+' +
+      'Role:      ' + role + '
+' +
+      'Clearance: ' + clearance + '
+' +
+      'Location:  ' + (location || 'Not specified') + '
+' +
+      'Veteran:   ' + (veteran || 'Not specified') + '
+'
+    );
+
+    window.location.href = 'mailto:andrew.powers@powersstaffinggroup.com?subject=' + subject + '&body=' + body;
+
+    form.style.display = 'none';
+    success.classList.add('show');
+  });
+})();
+
 (function(){
   if(!window.IntersectionObserver) return;
   var els = document.querySelectorAll('.fade-up');
