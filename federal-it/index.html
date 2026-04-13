@@ -84,7 +84,7 @@
 /* ── IT PAGE SPECIFIC ── */
 
 /* Labor categories detail grid */
-.lc-detail-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-top: 3rem; }
+.lc-detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
 .lc-card { background: var(--white); border: 1px solid var(--border); border-radius: 2px; padding: 2rem; transition: border-color 0.2s; }
 .lc-card:hover { border-color: var(--gold); }
 .lc-card-num { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold); font-weight: 500; display: block; margin-bottom: 0.625rem; }
@@ -309,7 +309,7 @@
       <a href="#candidates" class="btn-ghost">I&rsquo;m a Candidate</a>
     </div>
     <div class="stats-row" role="list" aria-label="Division key facts">
-      <div class="stat" role="listitem"><span class="stat-n" id="stat-lc">0</span><span class="stat-l">Labor Categories</span></div>
+      <div class="stat" role="listitem"><span class="stat-n" id="stat-lc">0</span><span class="stat-l">IT Service Lines</span></div>
       <div class="stat" role="listitem"><span class="stat-n" id="stat-it-visns">0</span><span class="stat-l">VA VISNs</span></div>
       <div class="stat" role="listitem"><span class="stat-n">W-2</span><span class="stat-l">All Employees</span></div>
       <div class="stat" role="listitem"><span class="stat-n">100%</span><span class="stat-l">SCA Compliant</span></div>
@@ -337,7 +337,7 @@
 <!-- LABOR CATEGORIES -->
 <section id="labor-categories" aria-labelledby="lc-heading">
   <div class="w">
-    <span class="tag" aria-hidden="true">Labor Categories</span>
+    <span class="tag" aria-hidden="true">Service Lines</span>
     <h2 id="lc-heading" class="h2-dk">Five IT Service Lines.<br>One Compliant Employer.</h2>
     <p class="body-dk">PSG staffs federal IT workers across five service lines — from end-user computing through cybersecurity operations. Every worker is SCA Wage Determination compliant, employed on W-2 payroll, and screened against a documented technical rubric.</p>
     <div class="lc-detail-grid">
@@ -797,7 +797,7 @@
 // IT page stat counters
 (function(){
   var stats = [
-    {id:'stat-lc',       target:8,  duration:800},
+    {id:'stat-lc',       target:5,  duration:800},
     {id:'stat-it-visns', target:18, duration:1200},
   ];
   var ran = false;
