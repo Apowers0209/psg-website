@@ -806,4 +806,28 @@
     stats.forEach(function(s){
       var el = document.getElementById(s.id);
       if(!el) return;
-      var n =
+      var n =0, start=null, dur=s.duration;
+      function step(ts){
+        if(!start) start=ts;
+        var prog=Math.min((ts-start)/dur,1);
+        el.textContent=Math.round(prog*s.target);
+        if(prog<1) requestAnimationFrame(step);
+        else el.textContent=s.target;
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  if('IntersectionObserver' in window){
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting) run(); });
+    },{threshold:0.3});
+    var trigger=document.querySelector('.stats-row');
+    if(trigger) obs.observe(trigger);
+  } else {
+    run();
+  }
+})();
+</script>
+
+</body>
+</html>
